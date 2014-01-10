@@ -37,7 +37,7 @@
         
             <div id="sorting"></div>
 
-            <hr id="anchor">
+            <hr>
 
             <div class="row" id="products-area">
               <div id="paginated-content"></div>
@@ -61,7 +61,7 @@
     <div class="thumbnail">
       <img src="<%= banner %>" alt="">
       <div class="caption">
-          <h4 class="pull-right">$ price</h4>
+          <h4 class="pull-right">$ <%= pricing %></h4>
           <h4><a href="{{url('products')}}/<%= slug %>"><%= name %></a></h4>
           <p><%= short_description %></p>
       </div>
@@ -141,7 +141,7 @@
       paginator_ui: {
         firstPage: 1,
         currentPage: 1,
-        perPage: 12,
+        perPage: 6,
         totalPages: 10
       },
       
@@ -212,10 +212,6 @@
           var sortText = this.$el.find('#sortByText').text();
         }else{
           var sortText = this.collection.sortField;
-
-          $('html, body').animate({
-            scrollTop: $("#anchor").offset().top - 60
-          }, 800);
         }
         $('#sortByText').text(sortText);
       },
@@ -258,20 +254,12 @@
         e.preventDefault();
         $('#products-area').spin();
         this.collection.requestPreviousPage();
-
-        $('html, body').animate({
-            scrollTop: $("#anchor").offset().top - 60
-        }, 800);
       },
 
       gotoNext: function (e) {
         e.preventDefault();
         $('#products-area').spin();
         this.collection.requestNextPage();
-
-        $('html, body').animate({
-            scrollTop: $("#anchor").offset().top - 60
-        }, 800);
       },
 
       gotoPage: function (e) {
@@ -279,10 +267,6 @@
         $('#products-area').spin();
         var page = $(e.target).text();
         this.collection.goTo(page);
-
-        $('html, body').animate({
-            scrollTop: $("#anchor").offset().top - 60
-        }, 800);
       }
 
     });

@@ -38,7 +38,7 @@ class Product extends Eloquent
 
 	public function scopePopular($query)
 	{
-	   	return $query->published()->orderBy('rating_count','desc');
+	   	return $query->published()->orderBy('rating_cache','desc');
 	}
 
 	public function scopeNewest($query)

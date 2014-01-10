@@ -4,7 +4,7 @@ class ApiProductsController extends \BaseController {
 
 	public function getIndex()
 	{
-		$perPage = e(Input::get('per_page','12'));
+		$perPage = e(Input::get('per_page','6'));
 		$page = e(Input::get('page','1'));
 		$sort = e(Input::get('sort','popular'));
 		$offset = $page*$perPage-$perPage;
@@ -24,7 +24,7 @@ class ApiProductsController extends \BaseController {
 
 		$count = $sortedProducts->count();
 
-		$products = $sortedProducts->take($perPage)->offset($offset)->get(array('slug','rating_cache','name','short_description','icon','banner'));
+		$products = $sortedProducts->take($perPage)->offset($offset)->get(array('slug','rating_cache','name','short_description','icon','banner','pricing'));
 
 		return Response::json(array(
 			'data'=>$products->toArray(),
