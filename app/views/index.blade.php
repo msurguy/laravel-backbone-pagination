@@ -61,7 +61,7 @@
     <div class="thumbnail">
       <img src="<%= banner %>" alt="">
       <div class="caption">
-          <h4 class="pull-right">$ <%= pricing %></h4>
+          <h4 class="pull-right">$ <% pricing %></h4>
           <h4><a href="{{url('products')}}/<%= slug %>"><%= name %></a></h4>
           <p><%= short_description %></p>
       </div>
