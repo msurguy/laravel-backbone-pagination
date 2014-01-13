@@ -2,6 +2,7 @@
 
 Route::resource('admin/seo', 'AdminSeoController');
 
+// This is the route for the Backbone pagination
 Route::get('api/products', 'ApiProductsController@getIndex');
 
 // Route for Homepage - displays all products from the shop

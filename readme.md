@@ -1,12 +1,20 @@
-## Laravel smart search implementation
+## Laravel Backbone - based in-place pagination demo Store application
 
-See demo at: http://laravel-smart-search.gopagoda.com/
-Tutorial at: http://maxoffsky.com/code-blog/laravel-shop-tutorial-3-implementing-smart-search
+See demo at: http://laravel-shop-pagination.gopagoda.com
+Tutorial at: http://maxoffsky.com/code-blog/in-place-pagination-using-backbone-js-laravel-shop-tutorial
 
-This application demonstrates usage of [Selectize.js](https://github.com/brianreavis/selectize.js) plugin to provide the user with Smart Search feature:
-![Smart search in action](https://raw.github.com/msurguy/laravel-smart-search/master/shop-search.gif)
+This application demonstrates usage of [Backbone Paginator](http://backbone-paginator.github.io/backbone.paginator/) Backbone.js plugin to provide the user with nice seamless pagination without a page refresh:
+![pagination in action](https://raw.github.com/msurguy/laravel-backbone-pagination/master/pagination.gif)
 
-The search API controller is in app/controllers/Api/SearchController.php
+The pagination API controller is in app/controllers/Api/ProductsController.php
+The page using Backbone and pagination is in app/views/index.blade.php
+
+### Installation instructions:
+- Download this repo
+- Set up a MySQL DB named 'shop-pagination' and import install.sql file into it, make sure you edit credentials in app/config/database.php to match yours
+- Open up terminal and CD into the folder of this repo
+- Run "php artisan serve" to run the application
+- Open up the browser and navigate to "localhost:8000" to see it in action
 
 ### Star this repo!
 
@@ -18,4 +26,4 @@ I post tutorials all the time on my blog : http://maxoffsky.com, stay updated on
 
 ### License
 
-The Laravel SEO admin is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
+The Laravel backbone pagination is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
