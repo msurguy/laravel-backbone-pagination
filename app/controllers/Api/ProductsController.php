@@ -2,33 +2,45 @@
 
 class ApiProductsController extends \BaseController {
 
-	public function getIndex()
-	{
-		$perPage = e(Input::get('per_page','6'));
-		$page = e(Input::get('page','1'));
-		$sort = e(Input::get('sort','popular'));
-		$offset = $page*$perPage-$perPage;
-		$count = 0;
+    public function getIndex()
+    {
+        // Get the number of items to show per page (defaults to 6 items)
+        $perPage = e(Input::get('per_page','6'));
 
-		switch ($sort) {
-			case 'date':
-				$sortedProducts = Product::newest();
-				break;
-			case 'name':
-				$sortedProducts = Product::byname();
-				break;
-			default:
-				$sortedProducts = Product::popular();
-				break;
-		}
+        // Get the index of the current page (defaults to the first page)
+        $page = e(Input::get('page','1'));
 
-		$count = $sortedProducts->count();
+        // Get the sorting parameter (defaults to popular)
+        $sort = e(Input::get('sort','popular'));
 
-		$products = $sortedProducts->take($perPage)->offset($offset)->get(array('slug','rating_cache','name','short_description','icon','banner','pricing'));
+        // Calculate the offset of the items
+        $offset = $page*$perPage-$perPage;
 
-		return Response::json(array(
-			'data'=>$products->toArray(),
-			'total' => $count
-		));
-	}
+        // The count of items will be updated from the query
+        $count = 0;
+
+        switch ($sort) {
+          case 'date':
+            $sortedProducts = Product::newest();
+            break;
+          case 'name':
+            $sortedProducts = Product::byname();
+            break;
+          default:
+            $sortedProducts = Product::popular();
+            break;
+        }
+
+        // Get the count
+        $count = $sortedProducts->count();
+
+        // Retrieve the products using Laravel's Eloquent ORM methods
+        $products = $sortedProducts->take($perPage)->offset($offset)->get(array('slug','rating_cache','name','short_description','icon','banner','pricing'));
+
+        // Return the results as JSON data
+        return Response::json(array(
+          'data'=>$products->toArray(),
+          'total' => $count
+        ));
+    }
 }

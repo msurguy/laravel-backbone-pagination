@@ -61,7 +61,7 @@
     <div class="thumbnail">
       <img src="<%= banner %>" alt="">
       <div class="caption">
-          <h4 class="pull-right">$ <% pricing %></h4>
+          <h4 class="pull-right">$ <%= pricing %></h4>
           <h4><a href="{{url('products')}}/<%= slug %>"><%= name %></a></h4>
           <p><%= short_description %></p>
       </div>
@@ -94,7 +94,7 @@
    <% if (lastPage != currentPage && lastPage != 0) { %>
     <button class="btn btn-default next">Next</button>
    <% } %>
-   </script>
+  </script>
 
   <script type="text/html" id="sortingTemplate">
      <div class="btn-group">
@@ -108,31 +108,16 @@
   </script>
 
   <script type="text/javascript">
-  (function(){
-
     window.app = {};
     app.collections = {};
     app.models = {};
     app.views = {};
-    app.mixins = {};
     app.serverURL = '{{url("/")}}';
 
-    $(function(){
-        app.collections.paginatedItems = new app.collections.PaginatedCollection();
-        app.views.app = new app.views.AppView({collection: app.collections.paginatedItems});
-        app.views.pagination = new app.views.PaginatedView({collection:app.collections.paginatedItems});
-        app.views.sorting = new app.views.SortedView({collection:app.collections.paginatedItems});
-    });
+    app.models.Item = Backbone.Model.extend({});
 
-  })();
-
-  (function ( models ) {
-    models.Item = Backbone.Model.extend({});
-  })( app.models );
-
-  (function (collections, model, paginator) {
-    collections.PaginatedCollection = paginator.requestPager.extend({
-      model: model,
+    app.collections.PaginatedCollection = Backbone.Paginator.requestPager.extend({
+      model: app.models.Item,
       paginator_core: {
         dataType: 'json',
         url: app.serverURL + '/api/products'
@@ -165,11 +150,7 @@
 
     });
 
-  })( app.collections, app.models.Item, Backbone.Paginator);
-
-  ( function ( views ){
-
-    views.ResultView = Backbone.View.extend({
+    app.views.ItemView = Backbone.View.extend({
       tagName: 'div',
       className: 'col-sm-4 col-lg-4 col-md-4',
       template: _.template($('#ProductItemTemplate').html()),
@@ -185,12 +166,7 @@
       }
     });
 
-  })( app.views );
-
-
-  (function (views) {
-
-    views.SortedView = Backbone.View.extend({
+    app.views.SortedView = Backbone.View.extend({
 
       events: {
         'click #sortByField a': 'updateSortBy'
@@ -225,11 +201,7 @@
 
     });
 
-  })( app.views );
-
-  (function (views) {
-
-    views.PaginatedView = Backbone.View.extend({
+    app.views.PaginatedView = Backbone.View.extend({
 
       events: {
         'click button.prev': 'gotoPrev',
@@ -271,35 +243,33 @@
 
     });
 
-  })( app.views );
-
-  (function ( views ) {
-
-    views.AppView = Backbone.View.extend({
+    app.views.AppView = Backbone.View.extend({
       el : '#paginated-content',
 
       initialize : function () {
         $('#products-area').spin();
 
-        var tags = this.collection;
+        var items = this.collection;
 
-        tags.on('add', this.addOne, this);
-        tags.on('all', this.render, this);
+        items.on('add', this.addOne, this);
+        items.on('all', this.render, this);
 
-        tags.pager();
+        items.pager();
 
       },
 
       addOne : function ( item ) {
-        var view = new views.ResultView({model:item});
+        var view = new app.views.ItemView({model:item});
         $('#paginated-content').append(view.render().el);
-      },
-
-      render: function(){
       }
     });
 
-  })( app.views );
+    $(function(){
+        app.collections.paginatedItems = new app.collections.PaginatedCollection();
+        app.views.app = new app.views.AppView({collection: app.collections.paginatedItems});
+        app.views.pagination = new app.views.PaginatedView({collection:app.collections.paginatedItems});
+        app.views.sorting = new app.views.SortedView({collection:app.collections.paginatedItems});
+    });
 
   </script>
 @stop
