@@ -1,6 +1,6 @@
 ## Laravel Backbone - based in-place pagination demo Store application
 
-See demo at: http://laravel-shop-pagination.gopagoda.com
+See demo at: http://demos.maxoffsky.com/ajax-pagination/
 Tutorial at: http://maxoffsky.com/code-blog/in-place-pagination-using-backbone-js-laravel-shop-tutorial
 
 This application demonstrates usage of [Backbone Paginator](http://backbone-paginator.github.io/backbone.paginator/) Backbone.js plugin to provide the user with nice seamless pagination without a page refresh:
